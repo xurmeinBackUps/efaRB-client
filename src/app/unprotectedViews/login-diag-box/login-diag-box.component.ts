@@ -18,7 +18,7 @@ import { ActiveUserData } from '../../models/activeUser';
           <input matInput type="password" name="password" [(ngModel)]="user.password" required>
         </mat-form-field>
         <mat-slide-toggle (click)="loginAsAdmin()" name="is_admin" [(ngModel)]="user.is_admin" (checked)="false">Are you an admin?</mat-slide-toggle>
-        <div *ngIf=[checked=true]>
+        <div>
           <mat-form-field>
             <p>Admin Email:</p>
             <input matInput type="text" name="adminID" [(ngModel)]="user.adminID">

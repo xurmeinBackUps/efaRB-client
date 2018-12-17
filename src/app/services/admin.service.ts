@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserData } from '../models/user';
-
+import {cosmoknotURL} from '../../environments/environment.prod';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,13 +12,14 @@ const httpOptions = {
   })
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   private currentUserSubject: BehaviorSubject<UserData>;
   public currentUser: Observable<UserData>;
+  user = new UserData
+  id : number;
   is_admin: boolean = false;
   adminID: string
 
@@ -31,9 +32,9 @@ export class AdminService {
   }
 
   register(username, password, is_admin, adminID) {
-    return this.http.post<any>(`https:/cosmoknotserver.herokuapp.com/user/register/admin`,{ UserData: username, password, is_admin, adminID } )
+    return this.http.post<any>(`${cosmoknotURL}/user/register/admin`,{ UserData: username, password, is_admin, adminID } )
     .pipe(map(user => {
-      if ( user && user ) {
+      if ( user ) {
         localStorage.setItem('token', user.sessionToken);
         localStorage.setItem('atoken', user.adminToken)
       }
@@ -41,18 +42,18 @@ export class AdminService {
     }));
   }
   makeNew()  {
-    return this.http.post<any>(`https:/cosmoknotserver.herokuapp.com/user/register/new_user`, httpOptions)
+    return this.http.post<any>(`${cosmoknotURL}/user/register/new_user`, httpOptions)
   }
   findAll() : Observable<UserData[]> {
-    return this.http.get<UserData[]>(`https:/cosmoknotserver.herokuapp.com/user/sub-users`, httpOptions)
+    return this.http.get<UserData[]>(`${cosmoknotURL}/user/sub-users`, httpOptions)
   }
   findOne(): Observable<UserData[]> {
-    return this.http.get<UserData[]>(`https:/cosmoknotserver.herokuapp.com/user/sub-users/:id`, httpOptions)
+    return this.http.get<UserData[]>(`${cosmoknotURL}/user/sub-users/${this.user.id}`, httpOptions)
   }
   deleteUser() {
-    return this.http.delete<any>(`https:/cosmoknotserver.herokuapp.com/user/delete_account/:id`, httpOptions)
+    return this.http.delete<any>(`${cosmoknotURL}/user/delete_account/${this.user.id}`, httpOptions)
   }
   updateUser() {
-    return this.http.put<any>(`https:/cosmoknotserver.herokuapp.com/user/update_account/:id`, httpOptions)
+    return this.http.put<any>(`${cosmoknotURL}/user/update_account/${this.user.id}`, httpOptions)
   }
 }

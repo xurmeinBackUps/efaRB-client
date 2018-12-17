@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ActiveUserData } from '../models/activeUser';
 import { AdminToken, SessionToken } from '../models/tokens';
-import {} from '@angular/core/';
+import {cosmoknotURL} from '../../environments/environment.prod';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,7 +38,7 @@ export class AuthorizationService {
     }
 
   login(user): Observable<ActiveUserData> {
-    return this.http.post<ActiveUserData>(`https://cosmoknotserver.herokuapp.com/user/login`, user, httpOptions)
+    return this.http.post<ActiveUserData>(`${cosmoknotURL}/user/login`, user, httpOptions)
       .pipe(tap(user => {
         if(user){
           this.activeUserValue
