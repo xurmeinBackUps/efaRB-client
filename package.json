@@ -7,10 +7,10 @@
   },
   "main": "main.ts",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "ng": "ng",
     "start": "serve -s dist/cosmoknot",
     "build": "ng build",
-    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --prod"
