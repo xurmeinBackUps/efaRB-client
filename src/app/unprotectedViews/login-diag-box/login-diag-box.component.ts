@@ -17,11 +17,13 @@ import { ActiveUserData } from '../../models/activeUser';
           <p>Your password:</p>
           <input matInput type="password" name="password" [(ngModel)]="user.password" required>
         </mat-form-field>
-        <mat-slide-toggle (click)="loginAsAdmin()" name="is_admin" [(ngModel)]="user.is_admin">Are you an admin?</mat-slide-toggle>
-        <mat-form-field [user.is_admin]="true">
-          <p>Admin Email:</p>
-          <input matInput type="text" name="adminID" [(ngModel)]="user.adminID">
-        </mat-form-field>
+        <mat-slide-toggle (click)="loginAsAdmin()" name="is_admin" [(ngModel)]="user.is_admin" (checked)="false">Are you an admin?</mat-slide-toggle>
+        <div *ngIf=[checked]>
+          <mat-form-field>
+            <p>Admin Email:</p>
+            <input matInput type="text" name="adminID" [(ngModel)]="user.adminID">
+          </mat-form-field>
+        </div>
       </form>
       <div mat-dialog-actions>
         <button mat-button (click)="onCancel()" color="warn">Cancel</button>
